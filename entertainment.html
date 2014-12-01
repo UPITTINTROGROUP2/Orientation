@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ISCHOOL Orientation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+	<!--link rel="stylesheet/less" href="less/bootstrap.less" type="text/css" /-->
+	<!--link rel="stylesheet/less" href="less/responsive.less" type="text/css" /-->
+	<!--script src="js/less-1.3.3.min.js"></script-->
+	<!--append ‘#!watch’ to the browser URL, then refresh the page. -->
+	
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/index.css" rel="stylesheet">
+	
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+  <![endif]-->
+
+  <!-- Fav and touch icons -->
+  
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	
+	<!-- 谷歌地图API  -->
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCAoOjDlgsjedhHfdEAa6cAX6u7P5ByFz8&sensor=false"></script>
+	<script>
+	var map;
+	var myCenter = new google.maps.LatLng(40.444401, -79.954840);
+	var id; 
+	var mapDiv;
+	var geo1 = [[40.438111],[40.443392],[40.483377],[40.957433],[40.477074],[40.938541],[39.868901],[41.007194],[40.442814],[40.406851],[40.571025],[40.445878],[40.443442],[40.448209],[40.446804],];
+	var geo2 = [[-79.948526],[-79.949915],[-79.919969],[-80.168811],[-80.443114],[-80.097730],[-79.499269],[-80.008360],[-80.001724],[-79.918474],[-79.798390],[-80.018035],[-80.001067],[-80.004260],[-80.015827],];
+	var popup = [
+	["<div class=\"col-sm-12\"><h5>Phipps Conservatory</h5><p><strong>Tele: 412-622-6914</strong></p><p><strong>Comment</strong></p><ol><li>Better to dress in layers year-round and make use of the lockers</li><li>Most of the walkways at Phipps are concrete or stone</li><li>Some may be uneven and slippery when wet</li><li>Slip-resistant shoes are recommended for safety and enjoyment</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>Carnegie Museum of Natural History</h5><p><strong>Tele: 412-622-3131</strong></p><p><strong>Comment</strong></p><ol><li>Best palce for international students to get aware of human history</li><li>Free with your pitt student ID</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>Pittsburgh Zoo & PPG Aquarium</h5><p><strong>Tele: 412-665-3640</strong></p><p><strong>Comment</strong></p><ol><li>International level zoo, special on holiday</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>McConnells Mill State park</h5><p><strong>Tele: 724-368-8091</strong></p><p><strong>Comment</strong></p><ol><li>Good place for hiking and rating</li><li>Almost 6 different routes to choose</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>Raccoon Creek State park</h5><p><strong>Tele: 724-899-2200</strong></p><p><strong>Comment</strong></p><ol><li>Lake activities, trails&campsites</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>Moraine state park conservation area</h5><p><strong>Tele: 724-368-8811</strong></p><p><strong>Comment</strong></p><ol><li>Over 16,000 acres of outdoor activities</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>Ohiopyle</h5><p><strong>Tele: 724-329-8591</strong></p><p><strong>Comment</strong></p><ol><li>Whitewater boating, hiking &camping</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>Jennings Environmental Education Center</h5><p><strong>Tele: 724-794-6011</strong></p><p><strong>Comment</strong></p><ol><li>State park offering informative programs</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>Heinz Hall</h5><p><strong>Tele: 412 392 4900</strong></p><p><strong>Comment</strong></p><ol><li>Stay comfortable</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>AMC Loews Waterfront</h5><p><strong>Tele: 412-462-6550</strong></p><p><strong>Comment</strong></p><ol><li>It's enormous with IMAX and 3D</li><li>The seating is cushy and comfortable and very clean</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>Cinemark 18</h5><p><strong>Tele: 724-274-0155</strong></p><p><strong>Comment</strong></p><ol><li>New movie with big screen</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>Rongos Ominimax Theater</h5><p><strong>Tele: 412-237-3400</strong></p><p><strong>Comment</strong></p><ol><li>Imax theater</li><li>Most of the walkways at Phipps are concrete or stone</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>Cabaret At Theater Square</h5><p><strong>Tele: 412-325-6769</strong></p><p><strong>Comment</strong></p><ol><li>Performing Arts in all kinds of style</li></ol></div>"],
+
+	["<div class=\"col-sm-12\"><h5>PNC Park</h5><p><strong>Tele: 412-323-5000</strong></p><p><strong>Comment</strong></p><ol><li>The best places for kids</li><li>Could eat, drink and cheer on the Pirates around the stadium</li></ol></div>"],
+
+
+	["<div class=\"col-sm-12\"><h5>Heinz Field</h5><p><strong>Tele: 412-697-7700</strong></p><p><strong>Comment</strong></p><ol><li>Good For Kids Yes & Accepts Credit Cards Yes</li></ol></div>"],
+	];
+	
+	var geo;
+	var marker;
+	var markers = [];
+	function initialize()
+	{	  
+	  var mapProp = {
+	  center: myCenter,
+	  zoom:11,
+	  mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+		map=new google.maps.Map(document.getElementById("googleMap")
+	  ,mapProp);
+	}
+
+	
+	function showMarker(num){	
+	  
+	   id = num;
+	   mapDiv = document.getElementById(id+"");
+	   google.maps.event.addDomListener(mapDiv, 'click', placeMarker); 
+	   marker.setMap(null);
+	}
+	function placeMarker(){
+	  	marker = new google.maps.Marker({
+	    position: new google.maps.LatLng(geo1[id],geo2[id]),
+	    map: map,
+	  });
+
+	  marker.setMap(map);
+	  markers.push(marker);
+	  google.maps.event.addListener(marker, 'click', function() {
+    	infowindow.open(map,marker);
+  		});
+	  var infowindow = new google.maps.InfoWindow({
+	    content: "" + popup[id] 
+	  });	  
+	}
+	
+	function clearMarkers() {
+  		setAllMap(null);
+	}
+
+	function deleteMarkers() {
+	  clearMarkers();
+	  markers = [];
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+	<!-- 谷歌地图API结束 -->
+
+</head>
+
+<body>
+<div class="top_wrapper">
+
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+		
+				
+					<div class="page-header">
+						<h1>
+							University of Pittsburgh
+						</h1>
+					</div>
+				
+				
+			
+			<nav class="navbar navbar-default navbar-static-top" role="navigation">
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="index.php">Home</a>
+				</div>
+				
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="checklist.php">ToDo</a>
+						</li>
+						<li>
+							<a href="restaurant.html">Restaurant</a>
+						</li>
+						<li class="active">
+							<a href="entertainment.html">Entertainment</a>
+						</li>
+					</ul>
+					
+					<ul class="nav navbar-nav navbar-right">
+
+						<!--
+						<ul class="navbar-form navbar-left">
+							
+							<a class="btn btn-primary btn-large" href="login.html">Log in</a>
+							
+						</ul>
+					-->
+
+						<li>
+							<a href="entertainment.html">Hi, New student</a>
+						</li>
+					</ul>
+				</div>
+				
+			</nav>
+
+			<div class="row clearfix">
+				
+				<div class="col-md-3 column">
+					
+					
+
+					<div class="panel-group" id="panel-216477">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								 <a class="panel-title" data-toggle="collapse" data-parent="#panel-216477" href="#panel-element-932213">Attractions</a>
+							</div>
+							<div id="panel-element-932213" class="panel-collapse in">
+								<div class="panel-body">
+									<a style="color: #000000" id="0" href="#" onclick="showMarker(0)">Phipps Conservatory</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="1" href="#" onclick="showMarker(1)">Carnegie Museum of Natural History</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="2" href="#" onclick="showMarker(2)">Pittsburgh Zoo & PPG Aquarium</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="3" href="#" onclick="showMarker(3)">McConnells Mill State park</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="4" href="#" onclick="showMarker(4)">Raccoon Creek State park</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="5" href="#" onclick="showMarker(5)">Moraine state park conservation area</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="6" href="#" onclick="showMarker(6)">Ohiopyle</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="7" href="#" onclick="showMarker(7)">Jennings Environmental Education Center</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-216477" href="#panel-element-355496">Theater</a>
+							</div>
+							<div id="panel-element-355496" class="panel-collapse collapse">
+								<div class="panel-body">
+									<a style="color: #000000" id="8" href="#" onclick="showMarker(8)">Heinz Hall</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="9" href="#" onclick="showMarker(9)">AMC Loews Waterfront</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="10" href="#" onclick="showMarker(10)">Cinemark 18</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="11" href="#" onclick="showMarker(11)">Rongos Ominimax Theater</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="12" href="#" onclick="showMarker(12)">Cabaret At Theater Square</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-216477" href="#panel-element-355490">Sports</a>
+							</div>
+							<div id="panel-element-355490" class="panel-collapse collapse">
+								<div class="panel-body">
+									<a style="color: #000000" id="13" href="#" onclick="showMarker(13)">PNC Park</a>
+								</div>
+								<div class="panel-body">
+									<a style="color: #000000" id="14" href="#" onclick="showMarker(14)">Heinz Field</a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				
+
+				<!-- 地图模块 -->
+				<div class="col-md-9 column" id="googleMap" style="width:850px;height:480px;"></div>
+			</div>
+
+			
+			
+	        <div class="col-md-12 column">
+				<br>
+            	<br>
+            </div>
+			
+			
+		</div>
+	</div>
+</div>
+</div>
+
+</body>
+</html>
