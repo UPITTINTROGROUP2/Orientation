@@ -13,7 +13,7 @@
 	<!--append ‘#!watch’ to the browser URL, then refresh the page. -->
 	
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet">
+	<link href="css/index.css" rel="stylesheet">
 	
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
@@ -25,10 +25,120 @@
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/scripts.js"></script>
+
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCAoOjDlgsjedhHfdEAa6cAX6u7P5ByFz8&sensor=false"></script>
+	<script>
+	var map;
+	var myCenter = new google.maps.LatLng(40.444401, -79.954840);
+	var id; 
+	var mapDiv;
+	
+	var geo1 = [[40.525034],[40.452281],[40.441481],[40.438699],[40.489297],[40.450721],[40.440624],[40.432388],[40.440928],[40.445284],[40.436809],[40.437963],[40.438021],[40.440549],[40.552957],[40.451135],[40.432786],[40.452496],[40.476381],[40.459904],[40.448553],[40.428389],[40.450210],];
+	var geo2 = [[-80.007705],[-79.983656],[-79.956542],[-79.954699],[-79.893055],[-80.175703],[-79.956527],[-79.901369],[-79.958118],[ -79.949063],[-79.954695],[-79.919496],[-79.920109],[-79.956311],[-80.015460],[-79.933970],[-79.923401],[-79.934229],[-79.920524],[-79.924747],[-79.989419],[-79.973402],[-79.913881],];
+	var popup = [
+	[ "<div class=\"col-sm-12\"><h5>Oriental Super Buffet</h5><p><strong>Tele: 412-366-4288</strong></p><p><a href=\"http://chinesefoodmap.com/4693/PA/Pittsburgh/Oriental__Super_Buffet_North_Hills_Village_Mall\">http://chinesefoodmap.com/4693/PA/Pittsburgh/Oriental__Super_Buffet_North_Hills_Village_Mall</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Pamela's P & G Diner - Strip District</h5><p><strong>Tele: 412-281-6366</strong></p><p><a href=\"http://www.yelp.com/biz/pamelas-p-and-g-diner-pittsburgh\">http://www.yelp.com/biz/pamelas-p-and-g-diner-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Fuel & Fuddle</h5><p><strong>Tele: 412-682-3473</strong></p><p><a href=\"http://www.yelp.com/biz/fuel-and-fuddle-pittsburgh\">http://www.yelp.com/biz/fuel-and-fuddle-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Mi Ranchito</h5><p><strong>Tele: 412-586-7304</strong></p><p><a href=\"http://www.yelp.com/biz/mi-ranchito-pittsburgh\">http://www.yelp.com/biz/mi-ranchito-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Burgatory</h5><p><strong>Tele: 412-781-1456</strong></p><p><a href=\"http://www.yelp.com/biz/burgatory-pittsburgh-5\">http://www.yelp.com/biz/burgatory-pittsburgh-5</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Quaker Steak & Lube</h5><p><strong>Tele: 412-494-3344</strong></p><p><a href=\"http://www.yelp.com/biz/quaker-steak-and-lube-pittsburgh\">http://www.yelp.com/biz/quaker-steak-and-lube-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Sorrento's Pizza</h5><p><strong>Tele: 412-621-9129</strong></p><p><a href=\"http://www.yelp.com/biz/sorrentos-pizza-pittsburgh\">http://www.yelp.com/biz/sorrentos-pizza-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Sichuan Express</h5><p><strong>Tele: 412-904-4458</strong></p><p><a href=\"http://www.yelp.com/biz/szechuan-express-pittsburgh\">http://www.yelp.com/biz/szechuan-express-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>JinGe</h5><p><strong>Tele: 412-687-2288</strong></p><p><a href=\"http://www.yelp.com/biz/golden-palace-buffet-pittsburgh\">http://www.yelp.com/biz/golden-palace-buffet-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Lulu’s Noodles</h5><p><strong>Tele: 412-681-3333</strong></p><p><a href=\"http://www.yelp.com/biz/lulus-noodles-pittsburgh\">http://www.yelp.com/biz/lulus-noodles-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Oriental Kitchen</h5><p><strong>Tele: 412-682-3311</strong></p><p><a href=\"http://www.orientkitchen.com/\">http://www.orientkitchen.com/</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>ChuanBaWang</h5><p><strong>Tele: 412-422-1888</strong></p><p><a href=\"http://www.yelp.com/biz/how-lee-chinese-food-pittsburgh\">http://www.yelp.com/biz/how-lee-chinese-food-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Rose Tea Café</h5><p><strong>Tele: 412-421-2238</strong></p><p><a href=\"http://www.yelp.com/biz/rose-tea-cafe-pittsburgh\">http://www.yelp.com/biz/rose-tea-cafe-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>HuNan Bar</h5><p><strong>Tele: 412-621-2326</strong></p><p><a href=\"http://www.yelp.com/biz/hunan-bar-pittsburgh\">http://www.yelp.com/biz/hunan-bar-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>China Star</h5><p><strong>Tele: 412-364-9933</strong></p><p><a href=\"http://www.yelp.com/biz/china-star-pittsburgh\">http://www.yelp.com/biz/china-star-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>China Palace</h5><p><strong>Tele: 412-687-7423</strong></p><p><a href=\"https://www.grubhub.com/pittsburgh/china-palace-5440-walnut-street-pittsburgh/\">https://www.grubhub.com/pittsburgh/china-palace-5440-walnut-street-pittsburgh/</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>New Dumpling House</h5><p><strong>Tele: 412-422-4178</strong></p><p><a href=\"http://www.yelp.com/biz/new-dumpling-house-pittsburgh\">http://www.yelp.com/biz/new-dumpling-house-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>I Tea Café</h5><p><strong>Tele: 412-688-8330</strong></p><p><a href=\"http://www.yelp.com/biz/i-tea-cafe-pittsburgh\">http://www.yelp.com/biz/i-tea-cafe-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Park Bruges</h5><p><strong>Tele: 412-661-3334</strong></p><p><a href=\"http://www.yelp.com/biz/park-bruges-pittsburgh-2\">http://www.yelp.com/biz/park-bruges-pittsburgh-2</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Paris 66 Bistro</h5><p><strong>Tele: 412-404-8166</strong></p><p><a href=\"http://www.yelp.com/biz/paris-66-bistro-pittsburgh\">http://www.yelp.com/biz/paris-66-bistro-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Lidia's Pittsburgh</h5><p><strong>Tele: 412-552-0150</strong></p><p><a href=\"http://www.yelp.com/biz/lidias-pittsburgh-pittsburgh\">http://www.yelp.com/biz/lidias-pittsburgh-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Mallorca Restaurant</h5><p><strong>Tele: 412-488-1818</strong></p><p><a href=\"http://www.yelp.com/biz/mallorca-restaurant-pittsburgh\">http://www.yelp.com/biz/mallorca-restaurant-pittsburgh</a></p></div>"],
+
+	[ "<div class=\"col-sm-12\"><h5>Point Brugge Cafe</h5><p><strong>Tele: 412-441-3334</strong></p><p><a href=\"http://www.yelp.com/biz/point-brugge-cafe-pittsburgh\">http://www.yelp.com/biz/point-brugge-cafe-pittsburgh</a></p></div>"],
+	];
+	
+
+	var geo;
+	var marker;
+	var markers = [];
+	function initialize()
+	{	  
+	  var mapProp = {
+	  center: myCenter,
+	  zoom:13,
+	  mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+		map=new google.maps.Map(document.getElementById("googleMap")
+	  ,mapProp);
+	}
+
+	
+	function showMarker(num){	
+	  
+	   id = num;
+	   mapDiv = document.getElementById(id+"");
+	   google.maps.event.addDomListener(mapDiv, 'click', placeMarker); 
+	   marker.setMap(null);
+	}
+	function placeMarker(){
+	  	marker = new google.maps.Marker({
+	    position: new google.maps.LatLng(geo1[id],geo2[id]),
+	    map: map,
+	  });
+
+	  marker.setMap(map);
+	  markers.push(marker);
+	  google.maps.event.addListener(marker, 'click', function() {
+    	infowindow.open(map,marker);
+  		});
+	  var infowindow = new google.maps.InfoWindow({
+	    content: "" + popup[id] 
+	  });	  
+	}
+	
+	function clearMarkers() {
+  		setAllMap(null);
+	}
+
+	function deleteMarkers() {
+	  clearMarkers();
+	  markers = [];
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+	<!-- 谷歌地图API结束 -->
+
 </head>
 
 <body>
-<div id="top_wrapper">
+<div class="top_wrapper">
 
 
 <div class="container">
@@ -46,13 +156,13 @@
 			
 			<nav class="navbar navbar-default navbar-static-top" role="navigation">
 				<div class="navbar-header">
-					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">Home</a>
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="index.php">Home</a>
 				</div>
 				
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li>
-							<a href="checklist.html">ToDo</a>
+							<a href="checklist.php">ToDo</a>
 						</li>
 						<li class="active">
 							<a href="restaurant.html">Restaurant</a>
@@ -93,25 +203,25 @@
 							</div>
 							<div id="panel-element-932213" class="panel-collapse in">
 								<div class="panel-body">
-									Oriental Super Buffet
+									<a style="color: #000000" id="0" href="#" onclick="showMarker(0)">Oriental Super Buffet</a>
 								</div>
 								<div class="panel-body">
-									Pamela's P & G Diner - Strip District
+									<a style="color: #000000" id="1" href="#" onclick="showMarker(1)">Pamela's P & G Diner - Strip District</a>
 								</div>
 								<div class="panel-body">
-									Fuel & Fuddle
+									<a style="color: #000000" id="2" href="#" onclick="showMarker(2)">Fuel & Fuddle</a>
 								</div>
 								<div class="panel-body">
-									Mi Ranchito
+									<a style="color: #000000" id="3" href="#" onclick="showMarker(3)">Mi Ranchito</a>
 								</div>
 								<div class="panel-body">
-									Burgatory
+									<a style="color: #000000" id="4" href="#" onclick="showMarker(4)">Burgatory</a>
 								</div>
 								<div class="panel-body">
-									Quaker Steak & Lube
+									<a style="color: #000000" id="5" href="#" onclick="showMarker(5)">Quaker Steak & Lube</a>
 								</div>
 								<div class="panel-body">
-									Sorrento's Pizza
+									<a style="color: #000000" id="6" href="#" onclick="showMarker(6)">Sorrento's Pizza</a>
 								</div>
 							</div>
 						</div>
@@ -122,37 +232,37 @@
 							</div>
 							<div id="panel-element-355496" class="panel-collapse collapse">
 								<div class="panel-body">
-									Sichuan Express
+									<a style="color: #000000" id="7" href="#" onclick="showMarker(7)">Sichuan Express</a>
 								</div>
 								<div class="panel-body">
-									JinGe
+									<a style="color: #000000" id="8" href="#" onclick="showMarker(8)">JinGe</a>
 								</div>
 								<div class="panel-body">
-									Lulu’s Noodles
+									<a style="color: #000000" id="9" href="#" onclick="showMarker(9)">Lulu’s Noodles</a>
 								</div>
 								<div class="panel-body">
-									Oriental Kitchen
+									<a style="color: #000000" id="10" href="#" onclick="showMarker(10)">Oriental Kitchen</a>
 								</div>
 								<div class="panel-body">
-									ChuanBaWang
+									<a style="color: #000000" id="11" href="#" onclick="showMarker(11)">ChuanBaWang</a>
 								</div>
 								<div class="panel-body">
-									Rose Tea Café
+									<a style="color: #000000" id="12" href="#" onclick="showMarker(12)">Rose Tea Café</a>
 								</div>
 								<div class="panel-body">
-									HuNan Bar
+									<a style="color: #000000" id="13" href="#" onclick="showMarker(13)">HuNan Bar</a>
 								</div>
 								<div class="panel-body">
-									China Star
+									<a style="color: #000000" id="14" href="#" onclick="showMarker(14)">China Star</a>
 								</div>
 								<div class="panel-body">
-									China Palace
+									<a style="color: #000000" id="15" href="#" onclick="showMarker(15)">China Palace</a>
 								</div>
 								<div class="panel-body">
-									New Dumpling House
+									<a style="color: #000000" id="16" href="#" onclick="showMarker(16)">New Dumpling House</a>
 								</div>
 								<div class="panel-body">
-									I Tea Café
+									<a style="color: #000000" id="17" href="#" onclick="showMarker(17)">I Tea Café</a>
 								</div>
 							</div>
 						</div>
@@ -163,27 +273,28 @@
 							</div>
 							<div id="panel-element-355490" class="panel-collapse collapse">
 								<div class="panel-body">
-									Park Bruges
+									<a style="color: #000000" id="18" href="#" onclick="showMarker(18)">Park Bruges</a>
 								</div>
 								<div class="panel-body">
-									Paris 66 Bistro
+									<a style="color: #000000" id="19" href="#" onclick="showMarker(19)">Paris 66 Bistro</a>
 								</div>
 								<div class="panel-body">
-									Lidia's Pittsburgh
+									<a style="color: #000000" id="20" href="#" onclick="showMarker(20)">Lidia's Pittsburgh</a>
 								</div>
 								<div class="panel-body">
-									Mallorca Restaurant
+									<a style="color: #000000" id="21" href="#" onclick="showMarker(21)">Mallorca Restaurant</a>
 								</div>
 								<div class="panel-body">
-									Point Brugge Cafe
+									<a style="color: #000000" id="22" href="#" onclick="showMarker(22)">Point Brugge Cafe</a>
 								</div>
 							</div>
 						</div>
 
 					</div>
 				</div>
-				<div class="col-md-9 column">
-				</div>
+				
+				<!-- 地图模块 -->
+				<div class="col-md-9 column" id="googleMap" style="width:850px;height:480px;"></div>
 			</div>
 
 			

@@ -1,11 +1,7 @@
 @charset "UTF-8";
 /* CSS Document */
  
-/*  RESET  */
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:700);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic);
+
 
 @font-face {
     font-family: 'ModernPictogramsNormal';
