@@ -7,41 +7,81 @@
         <meta name="description" content="">
         <meta name="author" content="">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<!--<link href="css/style.css" rel="stylesheet">-->
+	<link href="css/index.css" rel="stylesheet">
 	<link href="css/checklist.css" rel="stylesheet">
   
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	
 	<script type="text/javascript" src="js/checklist.js"></script>
-        <script type="text/javascript" src="js/selectprocess.js"></script>
-        <!--<script type="text/javascript" src="js/map.js"></script>-->
+    <script type="text/javascript" src="js/selectprocess.js"></script>
 	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCAoOjDlgsjedhHfdEAa6cAX6u7P5ByFz8&sensor=false"></script>
         
-        <script id="scrpt">
-            function success(){
-//                alert ("success");
-            }
-            $(document).ready(function(){
-                <?php
-                    include 'conn.php';
-                    session_start();
-                    if(isset($_SESSION['username'])){
-                        $sql="SELECT * FROM todolistprocess WHERE email = '". $_SESSION['username']. "'";
-                        $result = mysqli_query($conn, $sql);
-                        $row = mysqli_fetch_array($result);
-                        for($i=1;$i<22;$i++){
-                            if ($row['TD'.$i]) {
-                                echo "document.getElementById(\"todo". $i. "\").className = \"todo-item done\";";
-                            }
+    <script type="text/javascript">
+        var total=0;
+        var barl=0;
+        function success1(myitem){
+           if(myitem.checked){
+               total=total+1;
+               barl=barl+100/3/6;
+               document.getElementById("bar1").style.width=barl+"%";
+               document.getElementById("lb1").innerHTML="You have completed"+" "+total+"/21";
+           }
+           else{
+               total=total-1;
+               barl=barl-100/3/6;
+               document.getElementById("bar1").style.width=barl+"%";
+               document.getElementById("lb1").innerHTML="You have completed"+" "+total+"/21";
+           }
+        }
+        var barl1=0;
+        function success2(myitem){
+           if(myitem.checked){
+               total=total+1;
+               barl1=barl1+100/3/4;
+               document.getElementById("bar2").style.width=barl1+"%";
+               document.getElementById("lb1").innerHTML="You have completed"+" "+total+"/21";
+           }
+           else{
+               total=total-1;
+               barl1=barl1-100/3/4;
+               document.getElementById("bar2").style.width=barl1+"%";
+               document.getElementById("lb1").innerHTML="You have completed"+" "+total+"/21";
+           }
+        }
+        var barl2=0;
+        function success3(myitem){
+           if(myitem.checked){
+               total=total+1;
+               barl2=barl2+100/3/11;
+               document.getElementById("bar3").style.width=barl2+"%";
+               document.getElementById("lb1").innerHTML="You have completed"+" "+total+"/21";
+           }
+           else{
+               total=total-1;
+               barl2=barl2-100/3/11;
+               document.getElementById("bar3").style.width=barl2+"%";
+               document.getElementById("lb1").innerHTML="You have completed"+" "+total+"/21";
+           }
+        }
+    </script>
+	<script>
+        $(document).ready(function(){
+            <?php
+                include 'conn.php';
+                session_start();
+                if(isset($_SESSION['username'])){
+                    $sql="SELECT * FROM todolistprocess WHERE email = '". $_SESSION['username']. "'";
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_array($result);
+                    for($i=1;$i<22;$i++){
+                        if ($row['TD'.$i]) {
+                            echo "document.getElementById(\"todo". $i. "\").className = \"todo-item done\";";
                         }
                     }
-                ?>        
-            });
-        </script>
-        
-        
-
+                }
+            ?>
+        });
+    </script>
 	<script>
 	var map;
 	var myCenter = new google.maps.LatLng(40.444401, -79.954840);
@@ -130,7 +170,7 @@
     </head>
 
 <body>
-<div id="top_wrapper">
+<div class="top_wrapper">
 
 
 <div class="container">
@@ -207,29 +247,27 @@
 				<div class="col-md-3 column">
 					
 					<div class="progress progress-striped">
-					   <div class="progress-bar progress-bar-success" role="progressbar" 
+					   <div class="progress-bar progress-bar-success" id="bar1" role="progressbar" 
 					      aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
-					      style="width: 40%;">
+					      style="width: 1%;">
 					      <span class="sr-only">40%</span>
 					   </div>
-					   <div class="progress-bar progress-bar-info" role="progressbar" 
+					   <div class="progress-bar progress-bar-info" id="bar2" role="progressbar" 
 					      aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-					      style="width: 30%;">
+					      style="width: 1%;">
 					      <span class="sr-only">30%</span>
 					   </div>
-					   <div class="progress-bar progress-bar-warning" role="progressbar" 
+					   <div class="progress-bar progress-bar-warning" id="bar3" role="progressbar" 
 					      aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-					      style="width: 20%;">
+					      style="width: 1%;">
 					      <span class="sr-only">20%</span>
 					   </div>
 					</div>
 
 
-					<div class="progress progress-striped">
-					   <div class="progress-bar progress-success" role="progressbar" aria-valuenow="60" 
-					      aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-					      <span class="sr-only">40%</span>
-					   </div>
+					<div>
+					<label id="lb1">You have completed 0/21 </>
+
 					</div>
 					<!-- 你看看你喜欢用哪个，要是前面的太难就用后面的 -->
 					
@@ -245,37 +283,37 @@
 								<div class="panel-body">
 									<div class="checkbox" id="0" onclick="showMarker(0)">
                                                                             <label id="todo1" class="todo-item" >
-                                                                                <input type="checkbox" id="checkbox01" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  1) <?php }?>">
+                                                                                <input type="checkbox" id="checkbox01" class="todo-check"  onclick="success1(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  1) <?php }?>">
 									    	Arrange Your Transportation From the Airport
                                                                             </label>
 									</div>
 									<div class="checkbox" id="1" onclick="showMarker(1)">
                                                                              <label id="todo2" class="todo-item" >
-									    	<input type="checkbox" id="checkbox02" class="todo-check"   onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  2) <?php }?>">
+									    	<input type="checkbox" id="checkbox02" class="todo-check"   onclick="success1(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  2) <?php }?>">
 									    	Get your Student card
                                                                             </label>
 									</div>
 									<div class="checkbox" id="2" onclick="showMarker(2)">
                                                                             <label id="todo3" class="todo-item">
-									    	<input type="checkbox" id="checkbox03" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  3) <?php }?>">
+									    	<input type="checkbox" id="checkbox03" class="todo-check"  onclick="success1(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  3) <?php }?>">
 									    	English Language Proficiency Test
                                                                             </label>
 									</div>
 									<div class="checkbox" id="3" onclick="showMarker(3)">
-                                                                            <label id="todo3" class="todo-item">
-									    	<input type="checkbox" id="checkbox03" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  3) <?php }?>">
-									    	English Language Proficiency Test
+                                                                            <label id="todo4" class="todo-item">
+									    	<input type="checkbox" id="checkbox04" class="todo-check"  onclick="success1(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  4) <?php }?>">
+									    	Meet Instructor &amp; courses enrollment
                                                                             </label>
 									</div>
 									<div class="checkbox" id="4" onclick="showMarker(4)">
                                                                             <label id="todo5" class="todo-item">
-									    	<input type="checkbox" value="1005" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  5) <?php }?>">
+									    	<input type="checkbox" id="checkbox05" class="todo-check"  onclick="success1(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  5) <?php }?>">
 									    	Tuition pay
                                                                             </label>
 									</div>
 									<div class="checkbox" id="5" onclick="showMarker(5)">
                                                                             <label id="todo6" class="todo-item">
-									    	<input type="checkbox" value="1006" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  6) <?php }?>">
+									    	<input type="checkbox" id="checkbox06" class="todo-check"  onclick="success1(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  6) <?php }?>">
 									    	Health insurance pay
                                                                             </label>
 									</div>
@@ -291,25 +329,25 @@
 								<div class="panel-body">
 									<div class="checkbox" id="6" onclick="showMarker(6)">
                                                                             <label id="todo7" class="todo-item">
-                                                                                    <input type="checkbox" value="2001" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>', 7) <?php }?>">
+                                                                                    <input type="checkbox" id="checkbox07" class="todo-check"  onclick="success2(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>', 7) <?php }?>">
 									    	OIS online check-in
                                                                             </label>
 									</div>
 									<div class="checkbox" id="7" onclick="showMarker(7)">
                                                                             <label id="todo8" class="todo-item">
-									    	<input type="checkbox" value="2002" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  8) <?php }?>">
+									    	<input type="checkbox" id="checkbox08" class="todo-check"  onclick="success2(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  8) <?php }?>">
 									    	OIS in-person check-in
                                                                             </label>
 									</div>
 									<div class="checkbox" id="8" onclick="showMarker(8)">
                                                                             <label id="todo9" class="todo-item">
-									    	<input type="checkbox" value="2003" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  9) <?php }?>">
+									    	<input type="checkbox" id="checkbox09" class="todo-check"  onclick="success2(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  9) <?php }?>">
 									    	International Student Group Session
                                                                             </label>
 									</div>
 									<div class="checkbox" id="9" onclick="showMarker(9)">
                                                                             <label id="todo10" class="todo-item">
-									    	<input type="checkbox" value="2004" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  10) <?php }?>">
+									    	<input type="checkbox" id="checkbox10" class="todo-check"  onclick="success2(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  10) <?php }?>">
 									    	International Student Individual Appointment
                                                                             </label>
 									</div>
@@ -326,67 +364,67 @@
 								<div class="panel-body">
 									<div class="checkbox" id="10" onclick="showMarker(10)">
                                                                             <label id="todo11" class="todo-item">
-									    	<input type="checkbox" value="3001" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  11) <?php }?>">
+									    	<input type="checkbox" id="checkbox11" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  11) <?php }?>">
 									    	Campus Tour
                                                                             </label>
 									</div>
 									<div class="checkbox" id="11" onclick="showMarker(11)">
                                                                             <label id="todo12" class="todo-item">
-									    	<input type="checkbox" value="3002" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  12) <?php }?>">
+									    	<input type="checkbox" id="checkbox12" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  12) <?php }?>">
 									    	Partners Session
                                                                             </label>
 									</div>
 									<div class="checkbox" id="12" onclick="showMarker(12)">
 									  	<label id="todo13" class="todo-item">
-									    	<input type="checkbox" value="3003" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  13) <?php }?>">
+									    	<input type="checkbox" id="checkbox13" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  13) <?php }?>">
 									    	Bonus Session 1: Surviving Grad School & Student Life
 									  	</label>
 									</div>
 									<div class="checkbox" id="13" onclick="showMarker(13)">
 									  	<label id="todo14" class="todo-item">
-									    	<input type="checkbox" value="3004" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  14) <?php }?>">
+									    	<input type="checkbox" id="checkbox14" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  14) <?php }?>">
 									    	Check-in
 									  	</label>
 									</div>
 									<div class="checkbox" id="14" onclick="showMarker(14)">
 									  	<label id="todo15" class="todo-item">
-									    	<input type="checkbox" value="3005" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  15) <?php }?>">
+									    	<input type="checkbox" id="checkbox15" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  15) <?php }?>">
 									    	Design Activity
 									  	</label>
 									</div>
 									<div class="checkbox" id="15" onclick="showMarker(15)">
 									  	<label id="todo16" class="todo-item">
-									    	<input type="checkbox" value="3006" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  16) <?php }?>">
+									    	<input type="checkbox" id="checkbox16" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  16) <?php }?>">
 									    	Dean’s Welcome & Introductions
 									  	</label>
 									</div>
 									<div class="checkbox" id="16" onclick="showMarker(16)">
 									  	<label id="todo17" class="todo-item">
-									    	<input type="checkbox" value="3007" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  17) <?php }?>">
+									    	<input type="checkbox" id="checkbox17" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  17) <?php }?>">
 									    	Degree Program Overview & Advising
 									  	</label>
 									</div>
 									<div class="checkbox" id="17" onclick="showMarker(17)">
 									  	<label id="todo18" class="todo-item">
-									    	<input type="checkbox" value="3008" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  18) <?php }?>">
+									    	<input type="checkbox" id="checkbox18" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  18) <?php }?>">
 									    	Getting Started: Info All Students Need to Know
 									  	</label>
 									</div>
 									<div class="checkbox" id="18" onclick="showMarker(18)">
 									  	<label id="todo19" class="todo-item">
-									    	<input type="checkbox" value="3009" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  19) <?php }?>">
+									    	<input type="checkbox" id="checkbox19" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  19) <?php }?>">
 									    	Research Resources & Academic Integrity
 									  	</label>
 									</div>
 									<div class="checkbox" id="19" onclick="showMarker(19)">
 									  	<label id="todo20" class="todo-item">
-									    	<input type="checkbox" value="3010" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  20) <?php }?>">
+									    	<input type="checkbox" id="checkbox20" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  20) <?php }?>">
 									    	Bonus Session 2: Career Planning & Prep
 									  	</label>
 									</div>
 									<div class="checkbox" id="20" onclick="showMarker(20)">
 									  	<label id="todo21" class="todo-item">
-									    	<input type="checkbox" value="3011" class="todo-check"  onclick="success();<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  21) <?php }?>">
+									    	<input type="checkbox" id="checkbox21" class="todo-check"  onclick="success3(this);<?php if(isset($_SESSION['username'])) {?>changeProcess('<?php echo $_SESSION['username'];?>',  21) <?php }?>">
 									    	iSchool Fall Picnic
 									  	</label>
 									</div>	
